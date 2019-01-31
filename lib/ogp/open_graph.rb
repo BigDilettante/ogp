@@ -52,17 +52,23 @@ module OGP
           when /^image$/i
             images << OpenStruct.new(url: attribute.get('content').to_s)
           when /^image:(.+)/i
-            images.last[Regexp.last_match[1].gsub('-', '_')] = attribute.get('content').to_s
+            if images.any?
+              images.last[Regexp.last_match[1].gsub('-', '_')] = attribute.get('content').to_s
+            end
           when /^audio$/i
             audios << OpenStruct.new(url: attribute.get('content').to_s)
           when /^audio:(.+)/i
-            audios.last[Regexp.last_match[1].gsub('-', '_')] = attribute.get('content').to_s
+            if audios.any?
+              audios.last[Regexp.last_match[1].gsub('-', '_')] = attribute.get('content').to_s
+            end
           when /^locale/i
             locales << attribute.get('content').to_s
           when /^video$/i
             videos << OpenStruct.new(url: attribute.get('content').to_s)
           when /^video:(.+)/i
-            videos.last[Regexp.last_match[1].gsub('-', '_')] = attribute.get('content').to_s
+            if videos.any?
+              videos.last[Regexp.last_match[1].gsub('-', '_')] = attribute.get('content').to_s
+            end
           else
             instance_variable_set("@#{attribute_name}", attribute.get('content'))
         end
